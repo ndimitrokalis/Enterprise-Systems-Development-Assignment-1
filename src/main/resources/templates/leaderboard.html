@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Leaderboard</h1>
+
+    <div class="player-info">
+        <p>Top players with the fewest attempts to guess the number!</p>
+    </div>
+
+    <div th:if="${#lists.isEmpty(leaderboard)}">
+        <p class="message info">No completed games yet. Be the first to complete a game!</p>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(leaderboard)}">
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Attempts</th>
+                <th>Target Number</th>
+                <th>Date</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="game, iterStat : ${leaderboard}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${game.player.name}"></td>
+                <td th:text="${game.attempts}"></td>
+                <td th:text="${game.targetNumber}"></td>
+                <td th:text="${#temporals.format(game.completedAt, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="button-group">
+        <a th:href="@{/game/}"><button>Home</button></a>
+        <a th:href="@{/game/play}"><button class="btn-secondary">Play Game</button></a>
+    </div>
+
+</div>
+
+</body>
+</html>

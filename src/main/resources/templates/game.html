@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Game</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Number Guessing Game</h1>
+
+    <div class="player-info">
+        <p><strong>Player:</strong> <span th:text="${playerName}"></span></p>
+        <p><strong>Attempts:</strong> <span th:text="${attempts}"></span></p>
+    </div>
+
+    <div th:if="${message}" class="message"
+         th:classappend="${gameWon} ? 'success' : (${feedback} == 'high' ? 'warning' : 'info')"
+         th:text="${message}">
+    </div>
+
+    <div th:if="${gameWon}">
+
+        <div class="message success">
+            <h2>Congratulations!</h2>
+            <p>You guessed the number <strong th:text="${targetNumber}"></strong> in <strong th:text="${attempts}"></strong> attempts!</p>
+        </div>
+
+        <div class="button-group">
+            <a th:href="@{/game/new}"><button class="btn-success">Play Again</button></a>
+            <a th:href="@{/game/history}"><button class="btn-secondary">View History</button></a>
+            <a th:href="@{/game/exit}"><button class="btn-secondary">Exit</button></a>
+        </div>
+
+    </div>
+
+    <div th:unless="${gameWon}">
+
+        <form th:action="@{/game/guess}" method="post">
+            <label for="guess">Enter your guess (1-100):</label>
+            <input type="number" id="guess" name="guess" min="1" max="100" required autofocus>
+            <button type="submit">Submit Guess</button>
+        </form>
+
+        <div class="button-group">
+            <a th:href="@{/game/history}"><button class="btn-secondary">View History</button></a>
+            <a th:href="@{/game/exit}"><button class="btn-secondary">Exit Game</button></a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

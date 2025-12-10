@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game - Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Number Guessing Game</h1>
+
+    <div th:if="${error}" class="message error" th:text="${error}"></div>
+
+    <div class="player-info">
+        <h2>How to Play:</h2>
+
+        <ul>
+            <li>The system will generate a random number between 1 and 100</li>
+            <li>Enter your name and start guessing</li>
+            <li>You'll receive feedback: "Too High", "Too Low", or "Correct!"</li>
+            <li>Try to guess the number in as few attempts as possible</li>
+        </ul>
+
+    </div>
+
+    <form th:action="@{/game/start}" method="post">
+        <label for="playerName">Enter Your Name:</label>
+        <input type="text" id="playerName" name="playerName" required maxlength="50" autofocus>
+        <button type="submit">Start Game</button>
+    </form>
+
+    <div class="text-center mt-20">
+        <a th:href="@{/game/leaderboard}">View Leaderboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>
